@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>GTA V Chatbot</title>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Fetch your API_KEY
+        const API_KEY = "AIzaSyAe9h6O1xjR-EOKQ75OMs1sJykkNc8u5CM";
+
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        async function runAI(personality, userPrompt) {
+
+            let identityPrompt;
+            if (personality === "Trevor") {
+                identityPrompt = `From now on, you are to act as Trevor from GTA V. Respond in a quirky, humorous, and intense style, similar to Trevor, but avoid any language that could be considered offensive, violent, or graphic. Keep it playful and witty.`;
+            }   
+            else {
+                identityPrompt = `From now on, you are to act as ${personality} from GTA V. Respond to all queries in the style and personality of ${personality}. Ensure that you maintain the unique traits, good language, and behavior of ${personality} in every response.`;
+            }
+
+            const prompt = `${identityPrompt} ${userPrompt}`;
+
+            try {
+                const result = await model.generateContent(prompt);
+                const jawab = await result.response;
+                const text = await jawab.text();
+                console.log(text);
+
+                return text;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Sorry, the response was blocked due to safety concerns.';
+            }
+        }
+
+        async function greetCharacter(personality) {
+
+            const greetingPrompt = `Introduce yourself as ${personality} from GTA V. Start with a greeting.`;
+            const result = await runAI(personality, greetingPrompt);
+
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<div><strong>${personality}:</strong> ${result}</div>`;
+
+        }
+
+        document.querySelectorAll('input[name="personality"]').forEach(radio => {
+            radio.addEventListener('change', async (event) => {
+                const selectedPersonality = event.target.value;
+                await greetCharacter(selectedPersonality);
+            });
+        });
+
+        document.getElementById('runButton').addEventListener('click', async () => {
+            const userPrompt = document.getElementById('promptInput').value;
+            const selectedPersonality = document.querySelector('input[name="personality"]:checked').value;
+            const result = await runAI(selectedPersonality, userPrompt);
+
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<div><strong>You:</strong> ${userPrompt}</div>`;
+            chatBox.innerHTML += `<div><strong>${selectedPersonality}:</strong> ${result}</div>`;
+
+            document.getElementById('promptInput').value = '';
+            localStorage.setItem('aiResult', result);
+        });
+
+        // Trigger initial greeting for the default selected personality
+        window.addEventListener('load', () => {
+            const selectedPersonality = document.querySelector('input[name="personality"]:checked').value;
+            greetCharacter(selectedPersonality);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>GTA V Chatbot</h1>
+    <div>
+        <label>
+            <input type="radio" name="personality" value="Michael" checked> Michael
+        </label>
+        <label>
+            <input type="radio" name="personality" value="Trevor"> Trevor
+        </label>
+        <label>
+            <input type="radio" name="personality" value="Franklin"> Franklin
+        </label>
+    </div>
+    <input type="text" id="promptInput" placeholder="Enter your prompt" />
+    <button id="runButton">Send</button>
+    <div id="chatBox"></div>
+</body>
+
+</html>
