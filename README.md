@@ -13,6 +13,7 @@ This project is a simple web-based chatbot that allows users to interact with th
 ## Technologies Used
 
 - HTML for the basic structure of the web page.
+- CSS for designing the structure of the web page.
 - JavaScript for handling user interactions and API calls.
 - [Google Generative AI](https://developers.generativeai.google) for generating chatbot responses.
 
@@ -42,7 +43,7 @@ To run this project, you'll need:
 ### How to Use
 
 1. **Select a character**:
-   - Choose one of the characters (Michael, Trevor, Franklin) by selecting the corresponding radio button.
+   - Choose one of the characters (Michael, Trevor, Franklin) by selecting the corresponding image or name of the charactor.
 
 2. **Enter a prompt**:
    - Type your message or question in the input field.
@@ -52,12 +53,3 @@ To run this project, you'll need:
 
 4. **Switch characters**:
    - Select a different character at any time, and the chat will start fresh with the new character's greeting.
-
-## File Structure
-
-```plaintext
-.
-├── index.html        # Main HTML file containing the chatbot interface.
-├── README.md         # This README file.
-└── assets            # Directory for any additional assets (if needed).
-
