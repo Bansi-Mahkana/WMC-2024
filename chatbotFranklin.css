@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#mainPage {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+#navbarImages {
+    width: 20%;
+    height: 100%;
+    background-color: #262626;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.imageCard {
+    height: 33.3%;
+    width: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.images {
+    height: 90%;
+    width: 60%;
+    margin-left: 7%;
+    margin-top: 4%;
+}
+
+#firstImage {
+    background-image: url('michaelChatbot.jpg');
+    background-size: cover;
+}
+
+#secondImage {
+    background-image: url('trevorChatbot.png');
+    background-size: cover;
+}
+
+#thirdImage {
+    background-image: url('franklinChatbot.jpg');
+    background-size: cover;
+}
+
+#thirddiv {
+    background-color: #424242;
+}
+
+.Text {
+    color: azure;
+    height: 100%;
+    width: 40%;
+    text-align: center;
+}
+
+h4 {
+    margin-top: 5.2em;
+}
+
+a {
+    color: azure;
+}
+
+#chatbot {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    background-color: #424242;
+}
+
+input {
+    width: 95%;
+    height: 5%;
+    margin: 2.5% 2.5%;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid azure;
+    color: black;
+    padding-left: 0.7em;
+    position: absolute;
+    bottom: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+#homeIcon {
+    width: 6%;
+    height: 10%;
+    margin-left: 94%;
+    text-align: center;
+    padding-top: 0.5em;
+}
+
+i:hover {
+    transform: scale(1.1);
+}
+
+i {
+    transition: all;
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
+}
+
+#sendIcon {
+    position: absolute;
+    text-align: center;
+    bottom: 1.68em;
+    right: 2.5em;
+    z-index: 1;
+}
