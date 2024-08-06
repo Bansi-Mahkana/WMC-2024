@@ -73,6 +73,8 @@ a {
     width: 80%;
     height: 100%;
     background-color: #424242;
+    color: azure;
+    padding-left: 1em;
 }
 
 input {
@@ -110,107 +112,14 @@ i {
     transition-timing-function: linear;
 }
 
-#sendIcon {
+#runButton {
     position: absolute;
     text-align: center;
-    bottom: 1.68em;
+    bottom: 2em;
+    padding: 2px;
     right: 2.5em;
     z-index: 1;
+    border-radius: 10px;
+    cursor: pointer;
 }
-/** {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-#mainPage {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-}
-
-#navbar {
-    width: 5%;
-    height: 100%;
-    background-color: #262626;
-}
-
-#navbarImages {
-    width: 20%;
-    height: 100%;
-    background-color: #262626;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-.imageCard {
-    height: 29%;
-    width: 100%;
-    left: 0;
-    display: flex;
-    justify-content: space-evenly;*/
-    /*background-color: aquamarine;*/
-/*}
-
-.images {
-    height: 90%;
-    width: 60%;
-    margin-left: 10%;
-    margin-top: 3%;
-}
-
-#firstImage {
-    background-image: url('michaelChatbot.jpg');
-    background-size: cover;
-}
-
-#secondImage {
-    background-image: url('trevorChatbot.png');
-    background-size: cover;
-}
-
-#thirdImage {
-    background-image: url('franklinChatbot.jpg');
-    background-size: cover;
-}
-
-#firstdiv {
-    background-color: #424242;
-}
-
-.Text {
-    color: azure;
-    height: 100%;
-    width: 40%;
-    text-align: center;*/
-    /*background-color: cornflowerblue;*/
-    /*z-index:10;
-}
-
-h4 {
-    margin-top: 4em;
-}
-
-a {
-    color: azure;
-}
-
-#chatbot {
-    width: 75%;
-    height: 100%;
-    background-color: #424242;
-}
-
-input {
-    width: 95%;
-    height: 5%;
-    margin: 2.5% 2.5%;
-    margin-top: 50%;
-    border: none;
-    border-radius: 5px;
-    border: 1px solid azure;
-    color: black;
-}*/ 
-
 

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <title>GTA V Chatbot</title>
     <script type="importmap">
         {
@@ -14,20 +15,20 @@
         import { GoogleGenerativeAI } from "@google/generative-ai";
 
         // Fetch your API_KEY
-        const API_KEY = "AIzaSyA6chdpH7cGfeUE5XTvmOme7dvRGrbAuFg";
+        const API_KEY = "AIzaSyAe9h6O1xjR-EOKQ75OMs1sJykkNc8u5CM";
 
-        // Access your API key
+        // Access your API key (see "Set up your API key" above)
         const genAI = new GoogleGenerativeAI(API_KEY);
+
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        // Chat history storage
-        let currentPersonality = "Michael";
-
         async function runAI(personality, userPrompt) {
+
             let identityPrompt;
             if (personality === "Trevor") {
                 identityPrompt = `From now on, you are to act as Trevor from GTA V. Respond in a quirky, humorous, and intense style, similar to Trevor, but avoid any language that could be considered offensive, violent, or graphic. Keep it playful and witty.`;
-            } else {
+            }   
+            else {
                 identityPrompt = `From now on, you are to act as ${personality} from GTA V. Respond to all queries in the style and personality of ${personality}. Ensure that you maintain the unique traits, good language, and behavior of ${personality} in every response.`;
             }
 
@@ -42,47 +43,44 @@
                 return text;
             } catch (error) {
                 console.error('Error:', error);
-                return 'I am not in a mood to talk';
+                return 'Sorry, the response was blocked due to safety concerns.';
             }
         }
 
         async function greetCharacter(personality) {
+
             const greetingPrompt = `Introduce yourself as ${personality} from GTA V. Start with a greeting.`;
             const result = await runAI(personality, greetingPrompt);
 
-            return result;
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<div><strong>${personality}:</strong> ${result}</div>`;
+
         }
 
         document.querySelectorAll('input[name="personality"]').forEach(radio => {
             radio.addEventListener('change', async (event) => {
-                currentPersonality = event.target.value;
-
-                // Clear chat box and chat history
-                const chatBox = document.getElementById('chatBox');
-                chatBox.innerHTML = '';
-
-                // Greet the new character
-                const greeting = await greetCharacter(currentPersonality);
-                chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${greeting}</div>`;
+                const selectedPersonality = event.target.value;
+                await greetCharacter(selectedPersonality);
             });
         });
 
         document.getElementById('runButton').addEventListener('click', async () => {
             const userPrompt = document.getElementById('promptInput').value;
-            const result = await runAI(currentPersonality, userPrompt);
+            const selectedPersonality = document.querySelector('input[name="personality"]:checked').value;
+            const result = await runAI(selectedPersonality, userPrompt);
 
             const chatBox = document.getElementById('chatBox');
             chatBox.innerHTML += `<div><strong>You:</strong> ${userPrompt}</div>`;
-            chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${result}</div>`;
+            chatBox.innerHTML += `<div><strong>${selectedPersonality}:</strong> ${result}</div>`;
 
             document.getElementById('promptInput').value = '';
+            localStorage.setItem('aiResult', result);
         });
 
         // Trigger initial greeting for the default selected personality
-        window.addEventListener('load', async () => {
-            const greeting = await greetCharacter(currentPersonality);
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${greeting}</div>`;
+        window.addEventListener('load', () => {
+            const selectedPersonality = document.querySelector('input[name="personality"]:checked').value;
+            greetCharacter(selectedPersonality);
         });
     </script>
 </head>
@@ -106,4 +104,3 @@
 </body>
 
 </html>
-

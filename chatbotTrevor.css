@@ -69,10 +69,12 @@ a {
 }
 
 #chatbot {
-    position: relative; 
+    position: relative;
     width: 80%;
     height: 100%;
     background-color: #424242;
+    color: azure;
+    padding-left: 1em;
 }
 
 input {
@@ -110,10 +112,13 @@ i {
     transition-timing-function: linear;
 }
 
-#sendIcon {
+#runButton {
     position: absolute;
     text-align: center;
-    bottom : 1.68em;
-    right  : 2.5em;
-    z-index : 1;
+    bottom: 2em;
+    padding: 2px;
+    right: 2.5em;
+    z-index: 1;
+    border-radius: 10px;
+    cursor: pointer;
 }

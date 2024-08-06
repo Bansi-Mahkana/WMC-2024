@@ -1,48 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trevor_Chatbot</title>
-    <link rel="stylesheet" href="chatbotTrevor.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="chatbottRevor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
     <main>
-
         <div id="mainPage">
-
             <div id="navbarImages">
                 <div class="imageCard" id="firstdiv">
                     <div class="images" id="firstImage"></div>
-                    <div class="Text" id="michael"><h4><a href="http://localhost:52658/chatbotMichael.html">Michael</a></h4></div>
+                    <div class="Text" id="michael">
+                        <h4><a href="./chatbotMichael.html">Michael</a></h4>
+                    </div>
                 </div>
                 <div class="imageCard" id="seconddiv">
                     <div class="images" id="secondImage"></div>
-                    <div class="Text" id="trevor"><h4>Trevor</h4></div>
+                    <div class="Text" id="trevor">
+                        <h4><a href="./chatbotTrevor.html">Trevor</a></h4>
+                    </div>
                 </div>
                 <div class="imageCard" id="thirddiv">
                     <div class="images" id="thirdImage"></div>
-                    <div class="Text" id="franklin"><h4><a href="http://localhost:52658/chatbotFranklin.html">Franklin</a></h4></div>
+                    <div class="Text" id="franklin"><h4><a href="./chatbotFranklin.html">Franklin</a></h4></div>
                 </div>
             </div>
 
             <div id="chatbot">
-                <div id="homeIcon"> 
-                    <a href="http://localhost:52658/index.html"><i class="fa fa-home" style="font-size:36px;color:azure"></i></a>
+                <div id="homeIcon">
+                    <a href="index.html">
+                        <i class="fa fa-home" style="font-size: 36px; color: azure"></i>
+                    </a>
                 </div>
-                <div id="sendIcon">
-                    <i style='font-size:24px' class='fas'>&#xf35a;</i>
+
+                <div id="chatBox"></div> <!-- Chat messages will appear here -->
+                <div id="input-box">
+                    <input type="search" id="promptInput" placeholder="Message Trevor" name="message" />
+                    <button id="runButton">Send</button>
                 </div>
-                
-                <input type="search" placeholder="Message Trevor" name="message" />
-                    
+
             </div>
-
         </div>
-
     </main>
 
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        const API_KEY = "AIzaSyA6chdpH7cGfeUE5XTvmOme7dvRGrbAuFg";
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        let currentPersonality = "Trevor";
+
+        async function runAI(personality, userPrompt) {
+            let identityPrompt;
+            if (personality === "Trevor") {
+                identityPrompt = `From now on, you are to act as Trevor from GTA V. Respond in a quirky, humorous, and intense style, similar to Franklin, but avoid any language that could be considered offensive, violent, or graphic. Keep it playful and witty.`;
+            } else {
+                identityPrompt = `From now on, you are to act as ${personality} from GTA V. Respond to all queries in the style and personality of ${personality}. Ensure that you maintain the unique traits, good language, and behavior of ${personality} in every response.`;
+            }
+
+            const prompt = `${identityPrompt} ${userPrompt}`;
+
+            try {
+                const result = await model.generateContent(prompt);
+                const jawab = await result.response;
+                const text = await jawab.text();
+                console.log(text);
+
+                return text;
+            } catch (error) {
+                console.error("Error:", error);
+                return "I am not in a mood to talk";
+            }
+        }
+
+        async function greetCharacter(personality) {
+            const greetingPrompt = `Introduce yourself as ${personality} from GTA V. Start with a greeting.`;
+            const result = await runAI(personality, greetingPrompt);
+
+            return result;
+        }
+
+        document.querySelectorAll('input[name="personality"]').forEach((radio) => {
+            radio.addEventListener("change", async (event) => {
+                currentPersonality = event.target.value;
+
+                const chatBox = document.getElementById("chatBox");
+                chatBox.innerHTML = "";
+
+                const greeting = await greetCharacter(currentPersonality);
+                chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${greeting}</div>`;
+            });
+        });
+
+        document.getElementById("runButton").addEventListener("click", async () => {
+            const userPrompt = document.getElementById("promptInput").value;
+            const result = await runAI(currentPersonality, userPrompt);
+
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML += `<div><strong>You:</strong> ${userPrompt}</div>`;
+            chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${result}</div>`;
+
+            document.getElementById("promptInput").value = "";
+        });
+
+        window.addEventListener("load", async () => {
+            const greeting = await greetCharacter(currentPersonality);
+            const chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML += `<div><strong>${currentPersonality}:</strong> ${greeting}</div>`;
+        });
+    </script>
 </body>
 </html>
