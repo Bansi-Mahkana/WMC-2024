@@ -12,7 +12,6 @@ This is our repository for Website Making Challenge (WMC) - 2024
 ### How to Use
 
 1. **Select a character**:
-   - Choose one of the characters (Michael, Trevor, Franklin) by selecting the corresponding radio button.
    - Choose one of the characters (Michael, Trevor, Franklin) by selecting the corresponding image or name of the charactor.
 
 2. **Enter a prompt**:
