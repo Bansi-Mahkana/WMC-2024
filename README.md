@@ -17,7 +17,6 @@ This is our repository for Website Making Challenge (WMC) - 2024
 
 2. **Enter a prompt**:
    - Type your message or question in the input field.
-@@ -52,12 +53,3 @@ To run this project, you'll need:
 
 4. **Switch characters**:
    - Select a different character at any time, and the chat will start fresh with the new character's greeting.
